@@ -1,6 +1,7 @@
 const bcrypt = require("bcryptjs");
 const jwt = require("jsonwebtoken");
 const User = require("../models/user.model");
+const { sendWelcomeEmail } = require("../services/email.service");
 
 const signToken = (user) =>
   jwt.sign({ id: user._id.toString(), role: user.role }, process.env.JWT_SECRET, {
@@ -22,6 +23,12 @@ exports.register = async (req, res, next) => {
       password: hashed,
       role: "user"
     });
+
+    try {
+  await sendWelcomeEmail(user.email, user.name);
+} catch (e) {
+  console.log("Email not sent:", e.message);
+}
 
     return res.status(201).json({
       token: signToken(user),
