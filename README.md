@@ -1,6 +1,6 @@
-# Laptop_Store_API
+### Laptop_Store_API
 
-## Project Overview
+#  Project Overview
 LaptopStore is a full-stack web application for managing and purchasing laptops.
 Users can register, login, browse laptops, add them to cart and create orders.
 Admins can manage products and users.
