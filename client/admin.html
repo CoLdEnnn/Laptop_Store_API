@@ -1,0 +1,203 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Laptop Store — Admin</title>
+
+  <link rel="stylesheet" href="./style.css" />
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800;900&display=swap" rel="stylesheet">
+</head>
+<body>
+  <div class="bg">
+    <div class="blob blob-1"></div>
+    <div class="blob blob-2"></div>
+  </div>
+
+  <!-- Header -->
+  <header class="header">
+    <div class="container">
+      <div class="nav">
+        <a class="brand" href="/index.html">
+          <div class="brand-mark">LS</div>
+          <div class="brand-name">Laptop Store</div>
+        </a>
+
+        <nav class="nav-links" id="navLinks">
+          <a href="/index.html">Home</a>
+          <a href="/catalog.html">Catalog</a>
+          <a href="/cart.html" class="cart-link">Cart <span class="badge" id="cartBadge">0</span></a>
+          <a href="/orders.html">Orders</a>
+          <a href="/admin.html"><b>Admin</b></a>
+        </nav>
+
+        <div class="nav-actions" id="navActions">
+          <span class="link" id="authSlot">Log in</span>
+          <button class="burger" id="burger" type="button" aria-label="Menu">
+            <span></span><span></span><span></span>
+          </button>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <main class="container">
+    <section class="section">
+      <h1 class="section-title">Admin Panel</h1>
+      <p class="section-sub">
+        Manage <b>Laptops</b> and <b>Orders</b>. This page requires <b>admin</b> role.
+      </p>
+
+      <!-- LOGIN / ACCESS CARD -->
+      <div class="glass pad" id="accessCard" style="margin-top:16px;">
+        <div id="accessInfo" class="muted" style="margin-bottom:12px;">
+          Please login as admin to use this panel.
+        </div>
+
+        <form id="loginForm" class="form" style="max-width:520px;">
+          <div class="row">
+            <label class="label" for="loginEmail">Email</label>
+            <input class="input" id="loginEmail" placeholder="admin@mail.com" />
+          </div>
+          <div class="row">
+            <label class="label" for="loginPassword">Password</label>
+            <input class="input" id="loginPassword" type="password" placeholder="••••••••" />
+          </div>
+
+          <div style="display:flex; gap:10px; flex-wrap:wrap;">
+            <button class="btn btn-dark" type="submit">Login</button>
+            <button class="btn btn-ghost" id="logoutBtn" type="button" style="display:none;">Logout</button>
+          </div>
+
+          <div class="muted" style="margin-top:10px;">
+            Tip: you can also login from <a class="link" href="/auth.html">auth.html</a> — token will work here too.
+          </div>
+        </form>
+      </div>
+
+      <!-- TABS -->
+      <div id="adminArea" style="display:none; margin-top:18px;">
+        <div style="display:flex; gap:10px; flex-wrap:wrap;">
+          <button class="btn btn-dark" type="button" id="tabLaptops">Laptops</button>
+          <button class="btn btn-ghost" type="button" id="tabOrders">Orders</button>
+          <button class="btn btn-ghost" type="button" id="refreshBtn">Refresh</button>
+        </div>
+
+        <!-- LAPTOPS -->
+        <div id="panelLaptops" style="margin-top:16px;">
+          <div class="hero-grid">
+            <!-- list -->
+            <div class="glass pad">
+              <h2 class="h3">Products</h2>
+              <div class="muted">Create / edit / delete laptops</div>
+
+              <div class="cart-table" style="overflow:auto; margin-top:10px;">
+                <table>
+                  <thead>
+                    <tr>
+                      <th>Brand / Model</th>
+                      <th>Specs</th>
+                      <th>Price</th>
+                      <th>Stock</th>
+                      <th style="min-width:160px;">Actions</th>
+                    </tr>
+                  </thead>
+                  <tbody id="laptopsTbody"></tbody>
+                </table>
+              </div>
+            </div>
+
+            <!-- form -->
+            <div class="glass pad">
+              <h2 class="h3">Create / Edit</h2>
+              <div class="muted">Save = create (if id empty) or update (if id set)</div>
+
+              <form id="laptopForm" class="form" style="margin-top:12px;">
+                <input type="hidden" id="lapId" />
+
+                <div class="row">
+                  <label class="label">Brand</label>
+                  <input class="input" id="brand" placeholder="ASUS" required />
+                </div>
+
+                <div class="row">
+                  <label class="label">Model</label>
+                  <input class="input" id="model" placeholder="ROG Zephyrus G14" required />
+                </div>
+
+                <div class="row" style="display:grid; grid-template-columns:1fr 1fr; gap:10px;">
+                  <div>
+                    <label class="label">Price</label>
+                    <input class="input" id="price" type="number" min="0" placeholder="1600" required />
+                  </div>
+                  <div>
+                    <label class="label">Stock</label>
+                    <input class="input" id="stock" type="number" min="0" placeholder="5" />
+                  </div>
+                </div>
+
+                <div class="row" style="display:grid; grid-template-columns:1fr 1fr; gap:10px;">
+                  <div>
+                    <label class="label">CPU</label>
+                    <input class="input" id="cpu" placeholder="Ryzen 9" />
+                  </div>
+                  <div>
+                    <label class="label">RAM</label>
+                    <input class="input" id="ram" placeholder="32GB" />
+                  </div>
+                </div>
+
+                <div class="row" style="display:grid; grid-template-columns:1fr 1fr; gap:10px;">
+                  <div>
+                    <label class="label">Storage</label>
+                    <input class="input" id="storage" placeholder="1TB SSD" />
+                  </div>
+                  <div>
+                    <label class="label">GPU</label>
+                    <input class="input" id="gpu" placeholder="RTX 4070" />
+                  </div>
+                </div>
+
+                <div style="display:flex; gap:10px; flex-wrap:wrap; margin-top:8px;">
+                  <button class="btn btn-dark" type="submit">Save</button>
+                  <button class="btn btn-ghost" id="resetForm" type="button">Reset</button>
+                </div>
+              </form>
+            </div>
+          </div>
+        </div>
+
+        <!-- ORDERS -->
+        <div id="panelOrders" style="display:none; margin-top:16px;">
+          <div class="glass pad">
+            <h2 class="h3">Orders (admin)</h2>
+            <div class="muted">View all orders + change status</div>
+
+            <div class="cart-table" style="overflow:auto; margin-top:10px;">
+              <table>
+                <thead>
+                  <tr>
+                    <th>Order</th>
+                    <th>User</th>
+                    <th>Total</th>
+                    <th>Status</th>
+                    <th>Items</th>
+                    <th style="min-width:240px;">Change status</th>
+                  </tr>
+                </thead>
+                <tbody id="ordersTbody"></tbody>
+              </table>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <div id="toast" class="toast"></div>
+
+  <script src="/admin.js"></script>
+</body>
+</html>
