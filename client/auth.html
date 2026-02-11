@@ -1,0 +1,71 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Auth • LaptopStore</title>
+  <link rel="stylesheet" href="./style.css" />
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800;900&display=swap" rel="stylesheet">
+</head>
+<body data-page="auth">
+  <div class="bg"><div class="blob blob-1"></div><div class="blob blob-2"></div></div>
+
+  <header class="header">
+    <div class="container">
+      <nav class="nav">
+        <a class="brand" href="/"><span class="brand-mark">L</span><span class="brand-name">LaptopStore</span></a>
+
+        <nav class="nav-links" id="navLinks">
+  <a href="/index.html">Home</a>
+  <a href="/catalog.html">Catalog</a>
+  <a href="/cart.html">Cart</a>
+  <a href="/orders.html">Orders</a>
+  <a href="/admin.html" id="adminLink" style="display:none;"><b>Admin</b></a>
+</nav>
+
+
+        <div class="nav-actions" id="authSlot"></div>
+        <button class="burger" aria-label="Open menu"><span></span><span></span><span></span></button>
+      </nav>
+    </div>
+  </header>
+
+  <main class="section">
+    <div class="container">
+      <h1 class="section-title">Account</h1>
+      <p class="section-sub">Login to place orders and leave reviews.</p>
+
+      <div id="authBox" class="auth-grid">
+        <div class="glass pad">
+          <h2 class="section-title" style="font-size:22px">Log in</h2>
+          <form id="loginForm" class="form">
+            <label class="label">Email</label>
+            <input class="input" id="loginEmail" type="email" required placeholder="you@mail.com" />
+            <label class="label">Password</label>
+            <input class="input" id="loginPassword" type="password" required placeholder="••••••••" />
+            <button class="btn btn-dark" type="submit">Log in</button>
+          </form>
+        </div>
+
+        <div class="glass pad">
+          <h2 class="section-title" style="font-size:22px">Register</h2>
+          <form id="registerForm" class="form">
+            <label class="label">Name</label>
+            <input class="input" id="regName" required placeholder="Your name" />
+            <label class="label">Email</label>
+            <input class="input" id="regEmail" type="email" required placeholder="you@mail.com" />
+            <label class="label">Password</label>
+            <input class="input" id="regPassword" type="password" required placeholder="min 6 chars" />
+            <button class="btn btn-dark" type="submit">Create account</button>
+          </form>
+        </div>
+      </div>
+    </div>
+  </main>
+
+  <div id="toast" class="toast"></div>
+  <script src="./app.js" defer></script>
+</body>
+</html>

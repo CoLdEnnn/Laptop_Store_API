@@ -1,0 +1,68 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Catalog • LaptopStore</title>
+  <link rel="stylesheet" href="./style.css" />
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800;900&display=swap" rel="stylesheet">
+</head>
+<body data-page="catalog">
+  <div class="bg"><div class="blob blob-1"></div><div class="blob blob-2"></div></div>
+
+  <header class="header">
+    <div class="container">
+      <nav class="nav">
+        <a class="brand" href="/"><span class="brand-mark">L</span><span class="brand-name">LaptopStore</span></a>
+<nav class="nav-links" id="navLinks">
+  <a href="/index.html">Home</a>
+  <a href="/catalog.html">Catalog</a>
+  <a href="/cart.html">Cart</a>
+  <a href="/orders.html">Orders</a>
+  <a href="/admin.html" id="adminLink" style="display:none;"><b>Admin</b></a>
+</nav>
+
+
+        <div class="nav-actions" id="authSlot"></div>
+        <button class="burger" aria-label="Open menu"><span></span><span></span><span></span></button>
+      </nav>
+    </div>
+  </header>
+
+  <main class="section">
+    <div class="container">
+      <h1 class="section-title">Catalog</h1>
+      <p class="section-sub">Filter, sort and add laptops to cart.</p>
+
+      <form id="filtersForm" class="filters">
+        <input class="input" id="fBrand" placeholder="Brand (e.g. ASUS, HP)" />
+        <input class="input" id="fMin" type="number" placeholder="Min price" />
+        <input class="input" id="fMax" type="number" placeholder="Max price" />
+        <select class="input" id="fSort">
+          <option value="-createdAt">Newest</option>
+          <option value="price">Price: low → high</option>
+          <option value="-price">Price: high → low</option>
+          <option value="brand">Brand A→Z</option>
+        </select>
+        <div style="display:flex;gap:10px;flex-wrap:wrap">
+          <button class="btn btn-dark" type="submit">Apply</button>
+          <button class="btn btn-ghost" id="resetBtn" type="button">Reset</button>
+        </div>
+      </form>
+
+      <div id="catalogGrid" class="grid"></div>
+
+      <div class="pagination">
+        <button class="btn btn-ghost" id="prevPage" type="button">← Prev</button>
+        <div class="pageinfo" id="pageInfo"></div>
+        <button class="btn btn-ghost" id="nextPage" type="button">Next →</button>
+      </div>
+    </div>
+  </main>
+
+  <div id="toast" class="toast"></div>
+  <script src="./app.js" defer></script>
+</body>
+</html>

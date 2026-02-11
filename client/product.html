@@ -1,0 +1,45 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Product • LaptopStore</title>
+  <link rel="stylesheet" href="./style.css" />
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800;900&display=swap" rel="stylesheet">
+</head>
+<body data-page="product">
+  <div class="bg"><div class="blob blob-1"></div><div class="blob blob-2"></div></div>
+
+  <header class="header">
+    <div class="container">
+      <nav class="nav">
+        <a class="brand" href="/"><span class="brand-mark">L</span><span class="brand-name">LaptopStore</span></a>
+
+       <nav class="nav-links" id="navLinks">
+  <a href="/index.html">Home</a>
+  <a href="/catalog.html">Catalog</a>
+  <a href="/cart.html">Cart</a>
+  <a href="/orders.html">Orders</a>
+  <a href="/admin.html" id="adminLink" style="display:none;"><b>Admin</b></a>
+</nav>
+
+
+        <div class="nav-actions" id="authSlot"></div>
+        <button class="burger" aria-label="Open menu"><span></span><span></span><span></span></button>
+      </nav>
+    </div>
+  </header>
+
+  <main class="section">
+    <div class="container">
+      <a class="link" href="/catalog.html">← Back to catalog</a>
+      <div id="productBox" style="margin-top:14px;"></div>
+    </div>
+  </main>
+
+  <div id="toast" class="toast"></div>
+  <script src="./app.js" defer></script>
+</body>
+</html>
