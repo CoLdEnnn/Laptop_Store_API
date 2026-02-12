@@ -23,10 +23,9 @@ npm install express mongoose cors dotenv jsonwebtoken bcryptjs joi
 
 3. Create .env file:
 
-PORT=3000
-MONGO_URI=your_mongodb_uri
-JWT_SECRET=your_secret
-SENDGRID_API_KEY=your_key
+- PORT=3000
+- MONGO_URI=your_mongodb_uri
+- JWT_SECRET=your_secret
 
 4. Run server:
 
