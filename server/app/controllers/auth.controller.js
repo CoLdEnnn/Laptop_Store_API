@@ -25,10 +25,10 @@ exports.register = async (req, res, next) => {
     });
 
     try {
-  await sendWelcomeEmail(user.email, user.name);
-} catch (e) {
-  console.log("Email not sent:", e.message);
-}
+      await sendWelcomeEmail(user.email, user.name);
+    } catch (e) {
+      console.log("Email not sent:", e.message);
+    }
 
     return res.status(201).json({
       token: signToken(user),
