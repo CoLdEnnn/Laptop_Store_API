@@ -1,8 +1,4 @@
-// client/admin.js
-// Admin panel for Laptop Store (uses your backend API)
-// Requires admin role: role === "admin"
-
-const API = ""; // if deploy: "https://your-app.onrender.com"
+const API = ""; 
 
 const EP = {
   login: `${API}/api/auth/login`,
@@ -67,7 +63,6 @@ async function fetchJSON(url, opts = {}) {
   return data;
 }
 
-// burger menu (mobile)
 function initBurger() {
   const burger = $("burger");
   const links = $("navLinks");
@@ -80,7 +75,6 @@ function initBurger() {
   });
 }
 
-// cart badge (optional)
 function renderCartBadge() {
   const badge = $("cartBadge");
   if (!badge) return;
@@ -105,7 +99,6 @@ async function checkAdmin() {
   return me.user;
 }
 
-// ---- Laptops UI ----
 function laptopRowHTML(p) {
   const specs = p.specs || {};
   const specText = [specs.cpu, specs.ram, specs.storage, specs.gpu].filter(Boolean).join(" • ") || "-";
@@ -139,7 +132,6 @@ function readLaptopForm() {
     gpu: $("gpu").value.trim(),
   };
 
-  // remove empty specs fields
   Object.keys(specs).forEach((k) => { if (!specs[k]) delete specs[k]; });
 
   return { brand, model, price, stock, specs };
@@ -175,7 +167,6 @@ async function loadLaptops() {
   const tbody = $("laptopsTbody");
   tbody.innerHTML = `<tr><td colspan="5" class="muted">Loading...</td></tr>`;
 
-  // поддержка 2 вариантов: либо массив, либо {items, meta}
   const data = await fetchJSON(`${EP.laptops}?page=1&limit=100&sort=-createdAt`);
   const items = Array.isArray(data) ? data : (data.items || []);
 
@@ -202,7 +193,6 @@ async function loadLaptops() {
   });
 }
 
-// ---- Orders UI ----
 function statusBadge(status) {
   const s = String(status || "created");
   return `<span class="order-status ${s}">${s}</span>`;
@@ -262,7 +252,6 @@ async function loadOrders() {
   });
 }
 
-// ---- tabs ----
 function showTab(name) {
   const isL = name === "laptops";
   $("panelLaptops").style.display = isL ? "block" : "none";
@@ -272,7 +261,6 @@ function showTab(name) {
   $("tabOrders").className = isL ? "btn btn-ghost" : "btn btn-dark";
 }
 
-// ---- helpers ----
 function escapeHTML(s) {
   return String(s ?? "")
     .replaceAll("&", "&amp;")
@@ -282,12 +270,10 @@ function escapeHTML(s) {
     .replaceAll("'", "&#039;");
 }
 
-// ---- init ----
 document.addEventListener("DOMContentLoaded", async () => {
   initBurger();
   renderCartBadge();
 
-  // auth slot
   const authSlot = $("authSlot");
   const accessInfo = $("accessInfo");
   const logoutBtn = $("logoutBtn");
@@ -331,7 +317,6 @@ document.addEventListener("DOMContentLoaded", async () => {
     }
   });
 
-  // laptop form actions
   $("resetForm").addEventListener("click", resetLaptopForm);
 
   $("laptopForm").addEventListener("submit", async (e) => {
@@ -359,7 +344,6 @@ document.addEventListener("DOMContentLoaded", async () => {
     }
   });
 
-  // try to enable admin
   try {
     const user = await checkAdmin();
     authSlot.textContent = `Admin: ${user.name}`;

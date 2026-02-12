@@ -1,11 +1,4 @@
-/* Laptop Store Frontend (API-first)
-   Uses your backend endpoints:
-   - /api/auth/register, /api/auth/login, /api/auth/me
-   - /api/laptops, /api/laptops/:id, /api/laptops/:id/reviews
-   - /api/orders (GET mine), /api/orders (POST create), /api/orders/:id (PUT cancel)
-*/
-
-const API = ""; // same origin (http://localhost:3000)
+const API = "";
 const endpoints = {
   register: `${API}/api/auth/register`,
   login: `${API}/api/auth/login`,
@@ -20,7 +13,6 @@ const endpoints = {
   orderById: (id) => `${API}/api/orders/${id}`
 };
 
-// ---------- helpers ----------
 const $ = (sel, root = document) => root.querySelector(sel);
 const $$ = (sel, root = document) => Array.from(root.querySelectorAll(sel));
 const money = (n) => `$${Number(n || 0).toFixed(0)}`;
@@ -55,7 +47,6 @@ async function fetchJSON(url, opts = {}) {
   return data;
 }
 
-// ---------- auth API ----------
 async function apiRegister({ name, email, password }) {
   return fetchJSON(endpoints.register, { method: "POST", body: JSON.stringify({ name, email, password }) });
 }
@@ -66,7 +57,6 @@ async function apiMe() {
   return fetchJSON(endpoints.me);
 }
 
-// ---------- laptops API ----------
 async function apiGetLaptops(params = {}) {
   const q = new URLSearchParams();
   Object.entries(params).forEach(([k, v]) => {
@@ -85,20 +75,16 @@ async function apiDeleteReview(id, reviewId) {
   return fetchJSON(endpoints.reviewDelete(id, reviewId), { method: "DELETE" });
 }
 
-// ---------- orders API ----------
 async function apiCreateOrder(items) {
-  // items: [{laptopId, qty}]
   return fetchJSON(endpoints.orders, { method: "POST", body: JSON.stringify({ items }) });
 }
 async function apiMyOrders() {
   return fetchJSON(endpoints.orders, { method: "GET" });
 }
 async function apiCancelOrder(orderId) {
-  // your backend supports PUT /orders/:id with {status:"cancelled"}
   return fetchJSON(endpoints.orderById(orderId), { method: "PUT", body: JSON.stringify({ status: "cancelled" }) });
 }
 
-// ---------- cart ----------
 const CART_KEY = "cart:v1";
 
 function getCart() {
@@ -152,7 +138,6 @@ function cartTotal() {
   return cart.items.reduce((s, it) => s + Number(it.price || 0) * Number(it.qty || 0), 0);
 }
 
-// ---------- UI shared ----------
 function toast(msg, type = "ok") {
   const el = $("#toast");
   if (!el) return;
@@ -217,7 +202,6 @@ function mobileMenuInit() {
   });
 }
 
-// ---------- page renderers ----------
 function productCardHTML(p) {
   const id = p._id;
   const inStock = Number(p.stock || 0) > 0;
@@ -242,7 +226,6 @@ function productCardHTML(p) {
   `;
 }
 
-// index: featured
 async function renderFeatured() {
   const wrap = $("#featuredGrid");
   if (!wrap) return;
@@ -265,7 +248,6 @@ async function renderFeatured() {
   }
 }
 
-// catalog page
 async function renderCatalog() {
   const grid = $("#catalogGrid");
   if (!grid) return;
@@ -343,7 +325,6 @@ async function renderCatalog() {
   load();
 }
 
-// product page
 async function renderProduct() {
   const box = $("#productBox");
   if (!box) return;
@@ -416,7 +397,6 @@ async function renderProduct() {
       toast("Added to cart");
     });
 
-    // render reviews
     const list = $("#reviewsList");
     const reviews = Array.isArray(p.reviews) ? p.reviews : [];
     list.innerHTML = reviews.length
@@ -431,7 +411,6 @@ async function renderProduct() {
       `).join("")
       : `<div class="muted">No reviews yet.</div>`;
 
-    // review submit (requires auth)
     const token = getToken();
     const hint = $("#reviewHint");
     if (!token) {
@@ -444,7 +423,7 @@ async function renderProduct() {
           const comment = $("#comment")?.value || "";
           await apiAddReview(id, { rating, comment });
           toast("Review added");
-          location.reload(); // simplest refresh
+          location.reload();
         } catch (e) {
           toast(e.message, "err");
         }
@@ -455,7 +434,6 @@ async function renderProduct() {
   }
 }
 
-// cart page
 async function renderCartPage() {
   const wrap = $("#cartBox");
   if (!wrap) return;
@@ -566,7 +544,6 @@ async function renderCartPage() {
   render();
 }
 
-// orders page
 async function renderOrdersPage() {
   const wrap = $("#ordersBox");
   if (!wrap) return;
@@ -652,7 +629,6 @@ async function renderOrdersPage() {
   }
 }
 
-// auth page
 function authPageInit() {
   const box = $("#authBox");
   if (!box) return;
@@ -690,7 +666,6 @@ function authPageInit() {
   });
 }
 
-// ---------- boot ----------
 document.addEventListener("DOMContentLoaded", async () => {
   renderCartBadge();
   mobileMenuInit();
@@ -704,7 +679,7 @@ document.addEventListener("DOMContentLoaded", async () => {
   if (page === "orders") renderOrdersPage();
   if (page === "auth") authPageInit();
 });
-// ---- Admin link (show only if token role === "admin") ----
+
 function decodeJwtPayload(token) {
   try {
     const base64Url = token.split(".")[1];
